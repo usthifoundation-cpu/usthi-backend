@@ -11,6 +11,11 @@ from app.controllers.onlyImage import OnlyImagerouter as onlyImageRouter
 
 app = FastAPI(title="NGO Backend")
 
+# Add root route to prevent 404 at /
+@app.get("/")
+def read_root():
+    return {"message": "USTHI backend is running!"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=FRONTEND_URLS,
@@ -19,6 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include all routers
 app.include_router(contact_router)
 app.include_router(donate_router)
 app.include_router(legacy_donate_router)
